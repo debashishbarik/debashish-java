@@ -1,2 +1,2 @@
-# debashish-java
+# java projects
 java projects
