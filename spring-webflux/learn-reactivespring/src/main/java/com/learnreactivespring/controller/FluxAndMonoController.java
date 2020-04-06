@@ -35,5 +35,49 @@ public class FluxAndMonoController {
                 .log();
 
     }
+/*
+@Service
+public class MovieServiceImpl implements MovieService {
 
+ @Autowired
+ private MovieRepository movieRepository;
+
+@Override
+    public Mono<Movie> update(String id, MovieRequest movieRequest) {
+
+       return movieRepository.findById(id).flatMap(existingMovie -> {
+
+           if(movieRequest.getDescription() != null){
+               existingMovie.setDescription(movieRequest.getDescription());
+           }
+           if(movieRequest.getRating() != null){
+               existingMovie.setRating(movieRequest.getRating());
+           }
+           if(movieRequest.getTitle() != null) {
+               existingMovie.setTitle(movieRequest.getTitle());
+           }
+
+           return movieRepository.save(existingMovie);
+
+       });
+    }
+}
+
+@RestController
+public class MovieRestController {
+
+    @Autowired
+    private MovieService movieService;
+
+    @PutMapping("/movies/{movieId}")
+    public Mono<ResponseEntity<Movie>> update(
+            @PathVariable("movieId") final String movieId,
+            @RequestBody final MovieRequest movieRequest) {
+
+        return movieService.update(movieId, movieRequest)
+                .map(m -> new ResponseEntity<>(m, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+}*/
 }
