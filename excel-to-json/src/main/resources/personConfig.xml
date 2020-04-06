@@ -1,0 +1,17 @@
+<workbook>
+    <worksheet name="Sheet1">
+        <section startRow="0" endRow="0" />
+        <loop startRow="1" endRow="1" items="result" var="person" varType="com.debashish.exceltojson.pojo.Person">
+            <section startRow="1" endRow="1">
+                <mapping row="1" col="0">person.firstName</mapping>
+                <mapping row="1" col="1">person.lastName</mapping>
+                <mapping row="1" col="2">person.age</mapping>
+            </section>
+            <loopbreakcondition>
+                <rowcheck offset="0">
+                    <cellcheck offset="0" />
+                </rowcheck>
+            </loopbreakcondition>
+        </loop>
+    </worksheet>
+</workbook>
