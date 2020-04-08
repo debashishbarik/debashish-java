@@ -1,14 +1,14 @@
 package com.debashish.exceltojson;
 
 import com.debashish.exceltojson.pojo.Person;
-import com.debashish.exceltojson.utils.ExcelToJavaBeans;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.Resource;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class ExcelToJsonApplication implements CommandLineRunner {
@@ -35,11 +35,36 @@ public class ExcelToJsonApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        Workbook workbook = WorkbookFactory.create(excelfile.getInputStream());
+        Sheet sheet = workbook.getSheetAt(0);
+        ArrayList<Person> employeeList = new ArrayList<>();
+        //I've Header and I'm ignoring header for that I've +1 in loop
+        for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
+            Person e = new Person();
+            Row ro = sheet.getRow(i);
+            for (int j = ro.getFirstCellNum(); j <= ro.getLastCellNum(); j++) {
+                Cell ce = ro.getCell(j);
+                if (j == 0) {
+                    //If you have Header in text It'll throw exception because it won't get NumericValue
+                    e.setFirstName(ce.getStringCellValue());
+                }
+                if (j == 1) {
+                    e.setLastName(ce.getStringCellValue());
+                }
+                if (j == 2) {
+                    e.setAge((int) ce.getNumericCellValue());
+                }
+            }
+            employeeList.add(e);
+        }
+
+        System.out.println("Persons::::" + employeeList);
+        /*
         List<Person> persons = ExcelToJavaBeans.parseExcelFileToBeans(getExcelfile().getInputStream(),
                 getjXLSConfigFile().getInputStream());
 
 System.out.println("---------->"+persons);
-
+*/
 
 
 
